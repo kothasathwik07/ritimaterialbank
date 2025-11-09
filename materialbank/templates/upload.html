@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Material | Riti Material Bank</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+            color: #222;
+        }
+
+        header {
+            background-color: #111;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        header a {
+            color: #f7b5d7;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #111;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            transition: border 0.2s ease;
+        }
+
+        form input[type="file"] {
+            margin-bottom: 15px;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: #f7b5d7;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background-color: #f7b5d7;
+            color: #111;
+            border: none;
+            padding: 12px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #f291c0;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Riti Material Bank</h1>
+        <a href="{% url 'home' %}">← Back to Home</a>
+    </header>
+
+    <div class="container">
+        <h2>Upload New Material</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Upload Material</button>
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 Riti Club | KMIT</p>
+    </div>
+</body>
+</html>
+
+

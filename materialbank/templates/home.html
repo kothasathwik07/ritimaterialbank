@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riti Material Bank</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f7b5d7 20%, #fff 80%);
+            margin: 0;
+            padding: 0;
+            color: #222;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #111;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .btn {
+            background-color: #111;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .btn:hover {
+            background-color: #f7b5d7;
+            color: #111;
+            transform: scale(1.05);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 15px;
+            color: #444;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <!-- {% if messages %}
+  <div>
+    {% for message in messages %}
+      <div style="background-color:#d1fae5; color:#065f46; padding:10px; border-radius:8px; margin-bottom:15px;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %} -->
+
+    <header>
+        <h1>Riti Material Bank</h1>
+        <p>Share, reuse, and upcycle materials for creativity and sustainability 🌱</p>
+    </header>
+
+    <div class="btn-container">
+        <a href="{% url 'browse' %}" class="btn">Browse Materials</a>
+        <!-- <a href="{% url 'upload' %}" class="btn">Upload Material</a> -->
+         <a href="{% url 'donate' %}" class="btn">Donate Material</a>
+         {% if user.is_staff %}
+  <!-- <li><a href="{% url 'manage_requests' %}">Manage Requests</a></li> -->
+   
+{% endif %}
+
+
+    </div>
+<br>
+    <!-- login -->
+    {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }} 👋</p>
+  <a href="/manage_requests/" style="padding:10px 20px; background:#16a34a; color:white; text-decoration:none; border-radius:8px;">View Pending Donations</a>
+  <!-- <a href="{% url 'logout' %}" style="margin-left:10px; color:#dc2626;">Logout</a> -->
+  <!-- <a href="{% url 'logout' %}?next=/"style="margin-left:10px; color:#dc2626;">Logout</a> -->
+  <!-- {% if user.is_authenticated %}
+  <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+{% endif %} -->
+<br>
+<form action="{% url 'logout' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-link">Logout</button>
+</form>
+
+{% else %}
+  <a href="{% url 'login' %}" style="padding:10px 20px; background:#2563eb; color:white; text-decoration:none; border-radius:8px;">Admin Login</a>
+{% endif %}
+
+
+    <footer>
+        © 2025 Riti Club | KMIT
+    </footer>
+    {% if messages %}
+  <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+    {% for message in messages %}
+      <div class="toast" 
+           style="background-color: #d1fae5; color: #065f46; padding: 12px 18px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transform: translateX(100%); opacity: 0; transition: all 0.5s ease;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    // Animate toast entry
+    document.querySelectorAll('.toast').forEach((toast, index) => {
+      setTimeout(() => {
+        toast.style.transform = 'translateX(0)';
+        toast.style.opacity = '1';
+      }, 300 * index); // staggered animation
+    });
+
+    // Auto fade out after 4 seconds
+    setTimeout(() => {
+      document.querySelectorAll('.toast').forEach(toast => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 500);
+      });
+    }, 4000);
+  </script>
+{% endif %}
+
+
+</body>
+</html>
+

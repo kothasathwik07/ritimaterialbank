@@ -1,0 +1,197 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ material.name }} | Riti Material Bank</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f7b5d7 20%, #fff 80%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        img {
+            border-radius: 10px;
+            margin-top: 15px;
+            width: 250px;
+        }
+        a {
+            text-decoration: none;
+            background: #111;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        a:hover {
+            background: #f7b5d7;
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ material.name }}</h1>
+    <p><strong>Category:</strong> {{ material.category }}</p>
+    <p><strong>Quantity:</strong> {{ material.quantity }}</p>
+    <p><strong>Description:</strong> {{ material.description }}</p>
+    <p><strong>Donated by:</strong> {{ material.donator_name }}</p>
+    <p><strong>Currently with:</strong> {{ material.current_holder }}</p>
+    {% if material.image %}
+        <img src="{{ material.image.url }}" alt="{{ material.name }}">
+    {% endif %}
+
+    <a href="{% url 'browse' %}">← Back to Materials</a>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ material.name }} | Riti Material Bank</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff 60%, #f7b5d7 100%);
+            color: #222;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #111;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        header a {
+            color: #f7b5d7;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: white;
+            margin: 50px auto;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .image {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .details {
+            padding: 25px;
+        }
+
+        .details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #111;
+        }
+
+        .details p {
+            margin: 8px 0;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .description {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7f7f7;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            background: #111;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.25s ease;
+        }
+
+        .back-btn:hover {
+            background: #f7b5d7;
+            color: #111;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Riti Material Bank</h1>
+        <a href="{% url 'browse' %}">← Back to Browse</a>
+    </header>
+
+    <div class="container">
+        {% if material.image %}
+        <div class="image">
+            <img src="{{ material.image.url }}" alt="{{ material.name }}">
+        </div>
+        {% endif %}
+
+        <div class="details">
+            <h2>{{ material.name }}</h2>
+            <p><strong>Category:</strong> {{ material.category }}</p>
+            <p><strong>Quantity:</strong> {{ material.quantity }}</p>
+            <p><strong>Donated by:</strong> {{ material.donator_name }}</p>
+            <p><strong>Currently with:</strong> {{ material.current_with }}</p>
+
+            {% if material.description %}
+            <div class="description">
+                <strong>Description:</strong><br>
+                {{ material.description }}
+            </div>
+            {% endif %}
+
+            <a href="{% url 'browse' %}" class="back-btn">← Back to All Materials</a>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 Riti Club | KMIT
+    </footer>
+
+</body>
+</html>

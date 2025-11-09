@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Donations - Riti Material Bank</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+            padding: 30px;
+        }
+        h1 {
+            color: #222;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .donation-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: 0.2s ease;
+        }
+        .donation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+        }
+        .donation-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .donation-details {
+            display: flex;
+            align-items: center;
+        }
+        .info {
+            flex: 1;
+        }
+        .approve-btn {
+            background-color: #16a34a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .approve-btn:hover {
+            background-color: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pending Donation Requests</h1>
+
+    {% if pending %}
+        {% for donation in pending %}
+        <div class="donation-card">
+            <div class="donation-details">
+                {% if donation.image %}
+                    <img src="{{ donation.image.url }}" alt="{{ donation.name }}">
+                {% endif %}
+                <div class="info">
+                    <h3>{{ donation.name }}</h3>
+                    <p><b>Category:</b> {{ donation.category }}</p>
+                    <p><b>Quantity:</b> {{ donation.quantity }}</p>
+                    <p><b>Description:</b> {{ donation.description }}</p>
+                    <p><b>Donator:</b> {{ donation.donator_name }}</p>
+                    <p><b>Collected By:</b> {{ donation.collected_by }}</p>
+                </div>
+            </div>
+            <form action="{% url 'approve_donation' donation.id %}" method="post">
+                {% csrf_token %}
+                <button class="approve-btn">Approve</button>
+            </form>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align:center; color:#666;">No pending donation requests right now.</p>
+    {% endif %}
+</body>
+</html>

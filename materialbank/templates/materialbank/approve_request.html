@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Approve Donation</h2>
+
+<p><strong>Material:</strong> {{ donation_request.name }}</p>
+<p><strong>Donor:</strong> {{ donation_request.donator_name }}</p>
+<p><strong>Email:</strong> {{ donation_request.email }}</p>
+<p><strong>Quantity:</strong> {{ donation_request.quantity }}</p>
+<p><strong>Description:</strong> {{ donation_request.description }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  <label for="points">Enter points to award:</label>
+  <input type="number" id="points" name="points" min="0" required>
+  <button type="submit">Approve Donation</button>
+</form>
+{% endblock %}
