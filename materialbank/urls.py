@@ -13,5 +13,9 @@ urlpatterns = [
     path('manage_requests/', views.manage_requests, name='manage_requests'),
     path('approve_request/<int:request_id>/', views.approve_request, name='approve_request'),
     path('decline_request/<int:request_id>/', views.decline_request, name='decline_request'),
-    path('logout/', views.logout_user, name='logout'),
+    # path('logout/', views.logout_user, name='logout'),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    path("points/", views.points_table, name="points_table"),
+    path("update_points/<int:points_id>/", views.update_points, name="update_points"),
+
 ]

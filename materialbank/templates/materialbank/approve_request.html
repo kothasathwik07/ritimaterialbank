@@ -1,18 +1,157 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Approve Donation</title>
 
-{% block content %}
-<h2>Approve Donation</h2>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-<p><strong>Material:</strong> {{ donation_request.name }}</p>
-<p><strong>Donor:</strong> {{ donation_request.donator_name }}</p>
-<p><strong>Email:</strong> {{ donation_request.email }}</p>
-<p><strong>Quantity:</strong> {{ donation_request.quantity }}</p>
-<p><strong>Description:</strong> {{ donation_request.description }}</p>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff, #f7b5d7);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-<form method="post">
-  {% csrf_token %}
-  <label for="points">Enter points to award:</label>
-  <input type="number" id="points" name="points" min="0" required>
-  <button type="submit">Approve Donation</button>
-</form>
-{% endblock %}
+        /* HEADER / TASKBAR */
+        header {
+            background-color: #111;
+            color: white;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        header a {
+            color: #f7b5d7;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-btn {
+            background: #f7b5d7;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #111;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: white;
+        }
+
+        /* MAIN CARD */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #111;
+        }
+
+        p {
+            margin: 8px 0;
+            font-size: 15px;
+            color: #333;
+        }
+
+        strong {
+            color: #000;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #f7b5d7;
+            outline: none;
+            box-shadow: 0 0 4px rgba(247,181,215,0.5);
+        }
+
+        button {
+            background-color: #111;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: 0.25s;
+        }
+
+        button:hover {
+            background-color: #f7b5d7;
+            color: #111;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / TASKBAR -->
+    <header>
+        <h1>Approve Donation</h1>
+        <!-- <a href="{% url 'manage_requests' %}" class="back-btn">Back</a> -->
+        <a href="{% url 'manage_requests' %}">← Back to Requests</a>
+    </header>
+
+    <div class="card-container">
+        <div class="card">
+
+            <p><strong>Material:</strong> {{ donation_request.name }}</p>
+            <p><strong>Donor:</strong> {{ donation_request.donator_name }}</p>
+            <p><strong>Email:</strong> {{ donation_request.email }}</p>
+            <p><strong>Quantity:</strong> {{ donation_request.quantity }}</p>
+            <p><strong>Description:</strong> {{ donation_request.description }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <label for="points">Enter Points to Award:</label>
+                <input type="number" id="points" name="points" min="0" required>
+
+                <button type="submit">Approve Donation</button>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

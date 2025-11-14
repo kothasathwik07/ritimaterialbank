@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+import os
 
 class Material(models.Model):
     CATEGORY_CHOICES = [
@@ -24,6 +23,7 @@ class Material(models.Model):
     def __str__(self):
         return f"{self.name} ({self.category})"
 
+
 class DonationRequest(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -42,11 +42,26 @@ class DonationRequest(models.Model):
         ],
         default='Pending'
     )
-    collected_by = models.CharField(max_length=100, blank=True, null=True)  # Who collected it
+    collected_by = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name} ({self.status})"
+
+    def save(self, *args, **kwargs):
+        old = DonationRequest.objects.filter(pk=self.pk).first() if self.pk else None
+        super().save(*args, **kwargs)
+
+        # If status changed and now is rejected → delete old image
+        if old and old.status != self.status and self.status == "Rejected":
+            if old.image and os.path.isfile(old.image.path):
+                os.remove(old.image.path)
+
+    def delete(self, *args, **kwargs):
+        if self.image and os.path.isfile(self.image.path):
+            os.remove(self.image.path)
+        super().delete(*args, **kwargs)
+
 
 class Points(models.Model):
     email = models.EmailField(unique=True)

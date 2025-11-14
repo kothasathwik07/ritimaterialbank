@@ -95,6 +95,11 @@
     <!-- login -->
     {% if user.is_authenticated %}
   <p>Welcome, {{ user.username }} 👋</p>
+  <!-- <a href="{% url 'points_table' %}" class="btn">
+    <button>View Points Table</button>
+</a> -->
+  <a href="{% url 'points_table' %}" style="padding:10px 20px; background:#16a34a; color:white; text-decoration:none; border-radius:8px;">View Points Table</a>
+<br>
   <a href="/manage_requests/" style="padding:10px 20px; background:#16a34a; color:white; text-decoration:none; border-radius:8px;">View Pending Donations</a>
   <!-- <a href="{% url 'logout' %}" style="margin-left:10px; color:#dc2626;">Logout</a> -->
   <!-- <a href="{% url 'logout' %}?next=/"style="margin-left:10px; color:#dc2626;">Logout</a> -->

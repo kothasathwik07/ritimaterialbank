@@ -145,7 +145,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #fafafa;
+            background: linear-gradient(135deg, #fff, #f7b5d7);
             color: #222;
             margin: 0;
             padding: 0;
@@ -309,6 +309,35 @@
             color: #888;
             margin-top: 100px;
         }
+
+        /* Full Image Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -323,7 +352,7 @@
             {% for item in materials %}
             <div class="card">
                 {% if item.image %}
-                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" onclick="openImageModal('{{ item.image.url }}')">
                 {% endif %}
                 <div class="info">
                     <h2>{{ item.name }}</h2>
@@ -338,7 +367,7 @@
 {% endif %}
 
         {% csrf_token %}
-        <button class="use-btn" onclick="openModal('{{ item.id }}', '{{ item.name }}')">Use Material</button>
+        <button class="use-btn" onclick="openUseModal('{{ item.id }}', '{{ item.name }}')">Use Material</button>
     </form>
 {% endif %}
 
@@ -370,8 +399,26 @@
         <p>© 2025 Riti Club | KMIT</p>
     </div>
 
+
+    <!-- Full Image Modal -->
+    <div id="imgModal" class="modal">
+        <span class="modal-close" onclick="closeImageModal()">&times;</span>
+        <img id="modalImg">
+    </div>
+
     <script>
-        function openModal(materialId, materialName) {
+        function openImageModal(imgUrl) {
+            document.getElementById("modalImg").src = imgUrl;
+            document.getElementById("imgModal").style.display = "flex";
+        }
+
+        function closeImageModal() {
+            document.getElementById("imgModal").style.display = "none";
+        }
+    </script>
+
+    <script>
+        function openUseModal(materialId, materialName) {
             const modal = document.getElementById("useModal");
             const form = document.getElementById("useForm");
             const title = document.getElementById("modalTitle");

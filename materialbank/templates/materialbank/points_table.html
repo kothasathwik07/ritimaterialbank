@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points Table | Riti Material Bank</title>
+
+    <style>
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff, #f7b5d7);
+            margin: 0;
+            color: #222;
+            padding-top: 0;
+        }
+
+        header {
+    background-color: #111;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+header a {
+    color: #f7b5d7;
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 2;
+}
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background: #111;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f4f4f4;
+        }
+
+        .edit-btn {
+            background-color: #f7b5d7;
+            padding: 7px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .edit-btn:hover {
+            background: #111;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Points Table</h1>
+        <a href="{% url 'home' %}">← Back to Home</a>
+    </header>
+
+    <div class="container">
+        <h2>All Member Points</h2>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search by email..." onkeyup="searchTable()">
+        </div>
+
+        <table id="pointsTable">
+            <tr>
+                <th>Email</th>
+                <th>Points</th>
+                {% if user.is_staff %}
+                <th>Action</th>
+                {% endif %}
+            </tr>
+
+            {% for entry in points_table %}
+            <tr>
+                <td>{{ entry.email }}</td>
+                <td>{{ entry.total_points }}</td>
+
+                {% if user.is_staff %}
+                <td>
+                    <a href="{% url 'update_points' entry.id %}">
+                        <button class="edit-btn">Update</button>
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="footer">
+        © 2025 Riti Club | KMIT
+    </div>
+
+    <script>
+        function searchTable() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#pointsTable tr");
+
+            rows.forEach((row, index) => {
+                if (index === 0) return; // skip header
+                const email = row.cells[0].innerText.toLowerCase();
+                row.style.display = email.includes(input) ? "" : "none";
+            });
+        }
+    </script>
+
+</body>
+</html>

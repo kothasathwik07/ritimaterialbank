@@ -81,96 +81,96 @@ from .models import DonationRequest, Material, Points
 @user_passes_test(is_riti_member)
 def approve_request(request, request_id):
     donation_request = get_object_or_404(DonationRequest, id=request_id)
-    # if request.method == "POST":
-    #     points_given = int(request.POST.get("points", 0))  # get points manually entered
-    # # Mark as approved
-    #     donation_request.status = 'approved'
-    #     donation_request.save()
-
-    #     # Move to MaterialBank
-    #     Material.objects.create(
-    #         name=donation_request.name,
-    #         category=donation_request.category,
-    #         quantity=donation_request.quantity,
-    #         description=donation_request.description,
-    #         image=donation_request.image,
-    #         email=donation_request.email,
-    #         donator_name=donation_request.donator_name,
-    #         current_with=donation_request.donator_name  # corrected field name
-    #     )
-
-    #     # ✅ Add points to donor
-    #     # donation_points = donation_request.quantity * 10  # customize multiplier
-    #     # points, created = Points.objects.get_or_create(email=donation_request.email)
-    #     # points.total_points += donation_points
-    #     # points.save()
-
-    #     points, created = Points.objects.get_or_create(email=donation_request.email)
-    #     points.total_points += points_given
-    #     points.save()
-
-    #     # ✅ Send email notification
-    #     send_mail(
-    #         subject="🎉 Your donation was approved!",
-    #         message=f"Hi {donation_request.donator_name},\n\n"
-    #                 f"Your donation of '{donation_request.name}' has been accepted by Riti.\n"
-    #                 f"You’ve earned {points_given} Riti Points!\n"
-    #                 f"Your total points: {points.total_points}\n\n"
-    #                 f"Keep up the great work!\n– Team Riti 💚",
-    #         from_email=settings.DEFAULT_FROM_EMAIL,
-    #         recipient_list=[donation_request.email],
-    #         fail_silently=False,
-    #     )
-
-    #     messages.success(request, f"Request for {donation_request.name} approved and added to Material Bank.")
-    #     return redirect('manage_requests')
-    # return render(request, 'materialbank/approve_request.html', {'donation_request': donation_request})
-    donation_request.status = 'approved'
-    donation_request.save()
+    if request.method == "POST":
+        points_given = int(request.POST.get("points", 0))  # get points manually entered
+    # Mark as approved
+        donation_request.status = 'approved'
+        donation_request.save()
 
         # Move to MaterialBank
-    Material.objects.create(
-        name=donation_request.name,
-        category=donation_request.category,
-        quantity=donation_request.quantity,
-        description=donation_request.description,
-        image=donation_request.image,
-        email=donation_request.email,
-        donator_name=donation_request.donator_name,
-        current_with=donation_request.donator_name  # corrected field name
-    )
+        Material.objects.create(
+            name=donation_request.name,
+            category=donation_request.category,
+            quantity=donation_request.quantity,
+            description=donation_request.description,
+            image=donation_request.image,
+            email=donation_request.email,
+            donator_name=donation_request.donator_name,
+            current_with=donation_request.donator_name  # corrected field name
+        )
 
         # ✅ Add points to donor
-    donation_points = donation_request.quantity * 10  # customize multiplier
-    points, created = Points.objects.get_or_create(email=donation_request.email)
-    points.total_points += donation_points
-    points.save()
+        # donation_points = donation_request.quantity * 10  # customize multiplier
+        # points, created = Points.objects.get_or_create(email=donation_request.email)
+        # points.total_points += donation_points
+        # points.save()
 
-    # points, created = Points.objects.get_or_create(email=donation_request.email)
-    # points.total_points += points_given
-    # points.save()
+        points, created = Points.objects.get_or_create(email=donation_request.email)
+        points.total_points += points_given
+        points.save()
 
         # ✅ Send email notification
-    send_mail(
-        subject="🎉 Your donation was approved!",
-        message=f"Hi {donation_request.donator_name},\n\n"
-                f"Your donation of '{donation_request.name}' has been accepted by Riti.\n"
-                f"You’ve earned {donation_points} Riti Points!\n"
-                f"Your total points: {points.total_points}\n\n"
-                f"Keep up the great work!\n– Team Riti 💚",
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[donation_request.email],
-        fail_silently=False,
-    )
+        send_mail(
+            subject="🎉 Your donation was approved!",
+            message=f"Hi {donation_request.donator_name},\n\n"
+                    f"Your donation of '{donation_request.name}' has been accepted by Riti.\n"
+                    f"You’ve earned {points_given} Riti Points!\n"
+                    f"Your total points: {points.total_points}\n\n"
+                    f"Keep up the great work!\n– Team Riti 💚",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[donation_request.email],
+            fail_silently=False,
+        )
 
-    messages.success(request, f"Request for {donation_request.name} approved and added to Material Bank.")
-    return redirect('manage_requests')
+        messages.success(request, f"Request for {donation_request.name} approved and added to Material Bank.")
+        return redirect('manage_requests')
+    return render(request, 'materialbank/approve_request.html', {'donation_request': donation_request})
+    # donation_request.status = 'approved'
+    # donation_request.save()
+
+    #     # Move to MaterialBank
+    # Material.objects.create(
+    #     name=donation_request.name,
+    #     category=donation_request.category,
+    #     quantity=donation_request.quantity,
+    #     description=donation_request.description,
+    #     image=donation_request.image,
+    #     email=donation_request.email,
+    #     donator_name=donation_request.donator_name,
+    #     current_with=donation_request.donator_name  # corrected field name
+    # )
+
+    #     # ✅ Add points to donor
+    # donation_points = donation_request.quantity * 10  # customize multiplier
+    # points, created = Points.objects.get_or_create(email=donation_request.email)
+    # points.total_points += donation_points
+    # points.save()
+
+    # # points, created = Points.objects.get_or_create(email=donation_request.email)
+    # # points.total_points += points_given
+    # # points.save()
+
+    #     # ✅ Send email notification
+    # send_mail(
+    #     subject="🎉 Your donation was approved!",
+    #     message=f"Hi {donation_request.donator_name},\n\n"
+    #             f"Your donation of '{donation_request.name}' has been accepted by Riti.\n"
+    #             f"You’ve earned {donation_points} Riti Points!\n"
+    #             f"Your total points: {points.total_points}\n\n"
+    #             f"Keep up the great work!\n– Team Riti 💚",
+    #     from_email=settings.DEFAULT_FROM_EMAIL,
+    #     recipient_list=[donation_request.email],
+    #     fail_silently=False,
+    # )
+
+    # messages.success(request, f"Request for {donation_request.name} approved and added to Material Bank.")
+    # return redirect('manage_requests')
 
 @login_required
 @user_passes_test(is_riti_member)
 def decline_request(request, request_id):
     donation_request = get_object_or_404(DonationRequest, id=request_id)
-    donation_request.status = 'rejected'
+    donation_request.status = 'Rejected'
     donation_request.save()
 
     messages.info(request, f"Request for {donation_request.name} has been declined.")
@@ -203,3 +203,48 @@ def use_material(request, material_id):
             else:
                 material.save()
     return redirect('browse')
+
+
+# points table
+@login_required
+@user_passes_test(is_riti_member)
+def points_table(request):
+    query = request.GET.get("search", "")
+    if query:
+        points_data = Points.objects.filter(email__icontains=query)
+    else:
+        points_data = Points.objects.all()
+
+    return render(request, "materialbank/points_table.html", {"points_table": points_data, "search": query})
+
+
+# update points in points table
+@login_required
+@user_passes_test(is_riti_member)
+def update_points(request, points_id):
+    points_record = get_object_or_404(Points, id=points_id)
+
+    if request.method == "POST":
+        new_points = int(request.POST.get("new_points", points_record.total_points))
+        old_points = points_record.total_points
+
+        points_record.total_points = new_points
+        points_record.save()
+
+        # send mail to donor
+        send_mail(
+            subject="🔄 Your Riti Points Have Been Updated",
+            message=f"Hi,\n\nYour Riti Points have been updated.\n"
+                    f"Old Points: {old_points}\n"
+                    f"New Points: {new_points}\n\n"
+                    f"Keep supporting Riti 💚",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[points_record.email],
+            fail_silently=False,
+        )
+
+        messages.success(request, f"Updated points for {points_record.email}.")
+        return redirect("points_table")
+
+    return render(request, "materialbank/update_points.html", {"entry": points_record})
+
