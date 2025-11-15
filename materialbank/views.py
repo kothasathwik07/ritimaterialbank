@@ -88,16 +88,40 @@ def approve_request(request, request_id):
         donation_request.save()
 
         # Move to MaterialBank
-        Material.objects.create(
+        # Material.objects.create(
+        #     name=donation_request.name,
+        #     category=donation_request.category,
+        #     quantity=donation_request.quantity,
+        #     description=donation_request.description,
+        #     image=donation_request.image,
+        #     email=donation_request.email,
+        #     donator_name=donation_request.donator_name,
+        #     current_with=donation_request.donator_name  # corrected field name
+        # )
+
+
+        material = Material(
             name=donation_request.name,
             category=donation_request.category,
             quantity=donation_request.quantity,
             description=donation_request.description,
-            image=donation_request.image,
             email=donation_request.email,
             donator_name=donation_request.donator_name,
-            current_with=donation_request.donator_name  # corrected field name
+            current_with=donation_request.donator_name
         )
+
+        # First save — creates the object in DB
+        material.save()
+
+        # Upload image to Cloudinary
+        material.image.save(
+            donation_request.image.name,     # file name
+            donation_request.image.file      # actual file
+        )
+
+        # Save again to update image field URL
+        material.save()
+
 
         # ✅ Add points to donor
         # donation_points = donation_request.quantity * 10  # customize multiplier
