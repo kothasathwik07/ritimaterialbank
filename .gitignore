@@ -9,7 +9,7 @@ env/
 ENV/
 env.bak/
 venv.bak/
-
+media/
 # Django stuff:
 *.log
 *.pot
@@ -32,3 +32,4 @@ db.sqlite3   # if you were using SQLite
 # OS files
 .DS_Store
 Thumbs.db
+
